@@ -1,21 +1,33 @@
 const insert = document.getElementById("insert");
+const keyTable = document.getElementById("keyTable");
+const keyHistory = [];
 
 window.addEventListener("keydown", (e) => {
-  insert.innerHTML = `
-    <div class='color'>
-    <table style="width:100%">
-  <tr>
-    <th>Key</th>
-    <th>Key-Code</th>
-    <th>Code</th>
-  </tr>
-  <tr>
-    <td>${e.key === " " ? "Space" : e.key}</td>
-    <td>${e.keyCode}</td>
-    <td>${e.code}</td>
-  </tr>
-  
-</table>
-    </div>
-    `;
+  keyHistory.push({
+    key: e.key === " " ? "Space" : e.key,
+    keyCode: e.keyCode,
+    code: e.code,
+  });
+
+  updateKeyTable();
 });
+
+function updateKeyTable() {
+  keyTable.innerHTML = `
+        <tr>
+          <th>Key</th>
+          <th>Key-Code</th>
+          <th>Code</th>
+        </tr>
+      `;
+
+  keyHistory.forEach((keyData) => {
+    keyTable.innerHTML += `
+          <tr>
+            <td>${keyData.key}</td>
+            <td>${keyData.keyCode}</td>
+            <td>${keyData.code}</td>
+          </tr>
+        `;
+  });
+}
